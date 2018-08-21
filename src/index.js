@@ -30,13 +30,13 @@ class App extends Component{
 //Every class-based component must have a render(), this will make sure that whatever is put inside will be compiled to show on the browser.
 render(){
   return(
+    //This is how we write the components into jsx which will be compiled.
+    //We can write it with /> at the end because it not having to do something else other than show up.
       <div>
-      //This is how we write the components into jsx which will be compiled.
-      //We can write it with /> at the end because it not having to do something else other than show up.
         <SearchBar />
-        //Here we are passing each video we get from the search. Which we will assign to each instantiation of video_list_item.
         <VideoList videos={this.state.videos}/>
       </div>
+        //Here we are passing each video we get from the search. Which we will assign to each instantiation of video_list_item
     );
   }
 }
