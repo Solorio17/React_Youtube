@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 //React made changes to the way it works with your components, so now there is a react-dom module that will take care of taking your
 //components and know where to put them in the dom.
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import YTSearch from 'youtube-api-search';
 //Because SearchBar and VideoList are self-made functional components, when importing them we have to specify the full path.
 import SearchBar from './components/search_bar';
@@ -25,7 +26,7 @@ class App extends Component{
 
 //This YTSearch object, will take care of retrieving our videos from youtube
 //For key we assign the pre-declared API_KEY, the term is the keyword that the search will be based on, so it will return iphone videos.
-  this.videoSearch('trending')
+  this.videoSearch('music')
 }
 
 videoSearch(term){
@@ -39,6 +40,9 @@ videoSearch(term){
 
 //Every class-based component must have a render(), this will make sure that whatever is put inside will be compiled to show on the browser.
 render(){
+
+  const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
+
   return(
     //This is how we write the components into jsx which will be compiled.
     //We can write it with /> at the end because it not having to do something else other than show up.
