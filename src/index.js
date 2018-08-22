@@ -9,6 +9,7 @@ import YTSearch from 'youtube-api-search';
 //Because SearchBar and VideoList are self-made functional components, when importing them we have to specify the full path.
 import SearchBar from './components/search_bar';
 import VideoList from "./components/video_list";
+import VideoPlayer from './components/video_player';
 //Const is an addition to the  ES6 syntax, which translates basically to a var, but a const will never change its value after declaration
 const API_KEY = 'AIzaSyAheBEVRk7ORS6TUKu3FEAuuOzprJh7hnY';
 
@@ -17,13 +18,22 @@ class App extends Component{
   constructor(props){
     super(props);
 
-    this.state = { videos: []};
+    this.state = {
+       videos: [],
+       selectedVideo: null
+     };
 
 //This YTSearch object, will take care of retrieving our videos from youtube
 //For key we assign the pre-declared API_KEY, the term is the keyword that the search will be based on, so it will return iphone videos.
-    YTSearch({key: API_KEY, term: 'iphone'}, (videos) => {
-      this.setState({ videos }); //translates to this.setState({videos : videos}). Because its the same name we can reduce it to one.
-      console.log(data);
+  this.videoSearch('trending')
+}
+
+videoSearch(term){
+  YTSearch({key: API_KEY, term: term}, (videos) => {
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      }); //translates to this.setState({videos : videos}). Because its the same name we can reduce it to one.
     });
 }
 
@@ -33,8 +43,12 @@ render(){
     //This is how we write the components into jsx which will be compiled.
     //We can write it with /> at the end because it not having to do something else other than show up.
       <div>
-        <SearchBar />
-        <VideoList videos={this.state.videos}/>
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)}/>
+
+        <VideoPlayer video={this.state.selectedVideo}/>
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos}/>
       </div>
         //Here we are passing each video we get from the search. Which we will assign to each instantiation of video_list_item
     );
