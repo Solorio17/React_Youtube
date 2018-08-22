@@ -11,10 +11,10 @@ const VideoPlayer = ({video}) => {
       <div className="embed-responsive embed-responsive-16by9">
         <iframe className="embed-responsive-item" src={url}></iframe>
       </div>
-      <div className="details">
-        <div>{video.snippet.title}</div>
-        <div>{video.snippet.description}</div>
-      </div>
+        <ul className="list-group">
+          <li className="list-group-item">{video.snippet.title}</li>
+          <li className="list-group-item">{video.snippet.description}</li>
+        </ul>
     </div>
   );
 };
